@@ -6,7 +6,7 @@ SEARCH_ENGINE_ID = '05a0718899f664fda'
 API_KEY = 'AIzaSyAe34tm9-Og0El5ISwScopDSlYspE-XwO0'
 
 
-def check_plagiarism(queries):
+def check_plagiarism(phrases):
     """
     Check the given list of phrases for plagiarism and return a tuple containing the
     percentage of plagiarized content and a dictionary with the original and plagiarism
@@ -29,23 +29,23 @@ def check_plagiarism(queries):
 
     # initialize found and total variables
     found = 0
-    total = len(queries)
+    total = len(phrases)
 
-    for query in queries:
+    for phrase in phrases:
         #  adding qoutes to query for searching
-        search = f'"{query}"'
+        search = f'"{phrase}"'
         try:
             response = service.cse().list(q=search, cx=SEARCH_ENGINE_ID, num=1).execute()
             if 'items' in response:
                 first_url = response['items'][0]['link']
-                Dict[query] = first_url
+                Dict[phrase] = first_url
                 found += 1
             else:
-                Dict[query] = ""
+                Dict[phrase] = ""
         except HttpError as error:
             print(f'An error occurred: {error}')
-            Dict[query] = None
+            Dict[phrase] = None
 
     plag_index = format(found / total,".3f")
-    result = [plag_index, Dict]
+    result = (plag_index, Dict)
     return result
