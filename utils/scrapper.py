@@ -6,7 +6,7 @@ SEARCH_ENGINE_ID = '05a0718899f664fda'
 API_KEY = 'AIzaSyAe34tm9-Og0El5ISwScopDSlYspE-XwO0'
 
 
-def check_plagiarism(phrases):
+def check_plagiarism(phrases, word_count):
     """
     Check the given list of phrases for plagiarism and return a tuple containing the
     percentage of plagiarized content and a dictionary with the original and plagiarism
@@ -14,6 +14,7 @@ def check_plagiarism(phrases):
 
     Args:
         phrases: A list of phrases to check for plagiarism.
+        word_count: Total number of words in the document to be checked
 
     Returns:
         A tuple containing a float and a dictionary with string-string key value pairs.
@@ -27,25 +28,30 @@ def check_plagiarism(phrases):
     # Initialize an empty dictionary to store the search results
     Dict = {}
 
-    # initialize found and total variables
+    # initialize found variable
     found = 0
-    total = len(phrases)
 
     for phrase in phrases:
         #  adding qoutes to query for searching
         search = f'"{phrase}"'
         try:
+            # getting first search result
             response = service.cse().list(q=search, cx=SEARCH_ENGINE_ID, num=1).execute()
+            # checking if any result was found
             if 'items' in response:
                 first_url = response['items'][0]['link']
+                # adding phrase plus url to dict
                 Dict[phrase] = first_url
-                found += 1
+                # adding number of words in phrase to found variable
+                found += len(phrase.split())
             else:
+                # adding null value if phrase not found
                 Dict[phrase] = ""
         except HttpError as error:
             print(f'An error occurred: {error}')
             Dict[phrase] = None
 
-    plag_index = format(found / total,".3f")
+    plag_index = format(found / word_count, ".3f")
     result = (plag_index, Dict)
     return result
+
