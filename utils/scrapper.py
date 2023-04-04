@@ -35,18 +35,20 @@ def check_plagiarism(phrases, word_count):
         #  adding qoutes to query for searching
         search = f'"{phrase}"'
         try:
-            # getting first search result
-            response = service.cse().list(q=search, cx=SEARCH_ENGINE_ID, num=1).execute()
-            # checking if any result was found
-            if 'items' in response:
-                first_url = response['items'][0]['link']
-                # adding phrase plus url to dict
-                Dict[phrase] = first_url
-                # adding number of words in phrase to found variable
-                found += len(phrase.split())
-            else:
-                # adding null value if phrase not found
-                Dict[phrase] = ""
+
+            if len(phrase.split(' ', 2)) > 2:
+                # getting first search result
+                response = service.cse().list(q=search, cx=SEARCH_ENGINE_ID, num=1).execute()
+                # checking if any result was found
+                if 'items' in response:
+                    first_url = response['items'][0]['link']
+                    # adding phrase plus url to dict
+                    Dict[phrase] = first_url
+                    # adding number of words in phrase to found variable
+                    found += len(phrase.split())
+                else:
+                    # adding null value if phrase not found
+                    Dict[phrase] = ""
         except HttpError as error:
             print(f'An error occurred: {error}')
             Dict[phrase] = None
@@ -54,4 +56,3 @@ def check_plagiarism(phrases, word_count):
     plag_index = format(found / word_count, ".3f")
     result = (plag_index, Dict)
     return result
-
