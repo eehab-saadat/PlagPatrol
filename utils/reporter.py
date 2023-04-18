@@ -80,7 +80,7 @@ class PDF(FPDF):
         #add the relevant link
         w = self.get_string_width(webLink) + 6
         self.set_font('times', 'U', 16)
-        self.set_text_color()
+        self.set_text_color(0)
         self.multi_cell(w,8,webLink,ln=1,fill=0,border=1)
         self.ln(8)
         self.set_font('times', '', 16)
