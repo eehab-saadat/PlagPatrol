@@ -12,11 +12,11 @@ The ultimate responsive web-based OCR-embdedded plaigirism checker which generat
 ```
 6. Virtual environments help bundle up dependencies and manage them more effectively and better. Before you work on your project, you need to activate the corresponding environment:
 ```
-> venv/Scripts/activate
+> .\venv\Scripts\activate
 ```
 7. Now install all the required dependencies:
 ```
-> pip install requirements.txt
+> pip install -r requirements.txt
 ```
 8. Now you're all setup to run the project. To run it, run the following set of commands:
 ```
