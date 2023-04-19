@@ -1,6 +1,9 @@
 # Imports
 from os import environ
 from os.path import join
+# from utils.reporter import generate_report
+from utils.scrapper import check_plagiarism
+from utils.file_processor import get_meta, parse, tokenize
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import HTTPException
 from flask import Flask, flash, request, escape, redirect, url_for, render_template, send_from_directory
@@ -44,7 +47,23 @@ def upload_file():
                 return redirect(request.url)
             # Saves the file if everything is valid.
             if file and check_file_extension(filename):
-                file.save(join(app.config['DOWNLOAD_FOLDER'], filename))
+                userfile = join(app.config['DOWNLOAD_FOLDER'], filename)
+                file.save(userfile)
+                rawContent = parse(userfile)
+                tokContent = tokenize(rawContent)
+                wordCount, charCount = get_meta(rawContent)
+                plagIndex, results = check_plagiarism(tokContent, wordCount)
+                filename = filename.split('.', 1)[0]
+                print(10 * '-')
+                print(results)
+                print(10 * '-')
+                #print(app.config['DOWNLOAD_FOLDER'])
+                #generate_report(filename, plagIndex, results, wordCount, charCount, app.config['DOWNLOAD_FOLDER'])
+                for key, value in results.items():
+                    if value != "":
+                        print(f"'{key}' --> '{value}'")
+                    else:
+                        print(f"No source for '{key}'")
                 return render_template('main/download.html', filename=filename)
     # Renders the main upload file view.
     return render_template('main/upload.html')          
@@ -60,7 +79,7 @@ def download_file(filename):
     '''
     # Secures the file name from injection.
     filename = secure_filename(escape(filename))
-    return send_from_directory(app.config['DOWNLOAD_FOLDER'], filename, as_attachment=True)
+    return send_from_directory(app.config['DOWNLOAD_FOLDER'], f'{filename}_plagiarism_report.pdf', as_attachment=True)
 
 # Execution Config.
 if __name__ == '__main__':
