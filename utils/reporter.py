@@ -2,7 +2,6 @@ from fpdf import FPDF
 import os
 import datetime
 
-
 class PDF(FPDF):
     '''
     PDF class is inherited from buit-in FPDF class (base class)
@@ -12,12 +11,12 @@ class PDF(FPDF):
         '''
         this method is to create the title page of report with logo
         '''
-
-        self.image('logo.jpg', 70, 5, 70)  # adds a logo on top of first page
-        self.line(10, 35, 200, 35)
+        self.image('plag_patrol_logo.png', 62, 2, 83,48)  # adds a logo on top of first page
+        self.line(10, 52, 200, 52)
         # set font is a precondition to add a cell
         self.set_font('times', 'BUI', 22)
         self.cell(0, 30, ln=1, border=0)
+        self.ln(16)
 
     def footer(self):
         '''
@@ -35,7 +34,7 @@ class PDF(FPDF):
         '''
         extending header method to add watermark on every page created in the report
         '''
-        self.image('palgpetrol watermartk.png', 26, 105, 160)
+        self.image("palgpetrol watermartk.png", 20, 125, 180)
 
     def metaData(self, wordCount: int, instancesOfPlagerism: int, plagIndex: float):
         '''
@@ -55,8 +54,6 @@ class PDF(FPDF):
         z: str = f'Plagiarism Percetage = {plagIndex * 100}%'
         # adding text to report
         self.multi_cell(0, 8, a, ln=1, border=1)
-        # self.set_x=(self.w)/2-5
-        # self.multi_cell(((self.w)/2-15),8,curr_time,ln=1,border=1)
         self.cell(0, 8, x, ln=1, border=1)
         self.cell(0, 8, y, ln=1, border=1)
         self.cell(0, 8, z, ln=1, border=1)
@@ -65,9 +62,8 @@ class PDF(FPDF):
         '''
         add the text to pdf as it is
         '''
-
-        text_length = self.get_string_width(x)+2
-        self.multi_cell(0, 8, x, ln=1)
+        self.multi_cell(0, 6, x, ln=1)
+        self.ln(5)
 
     def addHighlighted(self, x: str, webLink):
         '''
@@ -75,43 +71,55 @@ class PDF(FPDF):
         the link of website from which plag was detected
         '''
         # add the plagiarised phrase
-        self.ln(8)
         self.set_draw_color(0, 0, 0)
-        self.set_fill_color(200, 1, 1)  # highlight the cell as red
+        self.set_fill_color(220, 1, 1)  # highlight the cell as red
         text_length = self.get_string_width(x)+2
         self.multi_cell(0, 8, x, ln=1, fill=1, border=1)
         # add the relevant link
-        w = self.get_string_width(webLink) + 6
-        self.set_font('times', 'U', 16)
+        self.set_font('DejaVuSans', 'U', 14)
         self.set_text_color(0)
-        self.multi_cell(w, 8, webLink, ln=1, fill=0, border=1)
-        self.ln(8)
-        self.set_font('times', '', 16)
+    
+        self.multi_cell(0, 8, f'Found on :\n{webLink}', ln=1, fill=0, border=1)
+        self.ln(5)
+        self.set_font('DejaVuSans', '', 14)
+
+    def addBulletList(self, references: set):
+        '''
+        adds a list as bullet points in the pdf
+        '''
+        self.set_font('DejaVuSans', 'U', 14)
+        for url in references:
+            
+            self.multi_cell(0, 6, f'\u2022{url}', ln=True)
+            self.ln(4)    
+        self.set_font('DejaVuSans', '', 14)
 
 
 def generate_report(filename: str, plagIndex: float, results: dict[str, str], wordCount: int, charCount: int, downloadFolder: str) -> None:
     '''
     create a pdf only if more than 10 words are present
     '''
-
+ 
     if (wordCount >= 10):
 
         # stores the number of sources from which plagiarism was detected
         instancesOfPlagiarism: int = 0
-        references: str = ['']  # A set of all urls in dict
+        references = set() # A set of all urls in dict
         # pdf = an object of PDF class thta'll be used to create the report
         pdf = PDF(orientation='P', unit='mm', format='A4')
+        # getting a unicode font for universal use 
+        pdf.add_font('DejaVuSans','',f'{os.getcwd()}\DejaVuSans.ttf', uni=True)
 
+    # creating a set of all references to be added as a list at the end of report
+        x = 0
         for phrase in results:
             '''
             makes a set of references present in dict -> references:str
             and their count -> instancesOfPlagiarism
             '''
-            webLink = results[phrase]
-            if webLink != '':
-                if webLink not in references:
-                    references.append(webLink)
-                    instancesOfPlagiarism += 1
+            if results[phrase] != '' :
+                references.add(results[phrase])
+            instancesOfPlagiarism = len(references)
 
         # metaData of report.pdf file
         pdf.set_author('Team PlagPatrol')
@@ -120,7 +128,7 @@ def generate_report(filename: str, plagIndex: float, results: dict[str, str], wo
         # adding page & setting font
         pdf.set_auto_page_break(auto=True, margin=20)
         pdf.add_page()
-        pdf.set_font('times', '', 22)  # font (font style, bold/U/Italic, size)
+        pdf.set_font('DejaVuSans', '', 22)  # font (font style, bold/U/Italic, size)
 
         # creating header of first page with logo
         pdf.Addlogo()
@@ -129,17 +137,13 @@ def generate_report(filename: str, plagIndex: float, results: dict[str, str], wo
         pdf.ln(10)
 
         # adding the data in dict passed by web scrapper
-        pdf.set_font('times', '', 16)
-
+        pdf.set_font('DejaVuSans', '', 14)
         phrases = list(results.keys())
         webLinks = list(results.values())
-        print(len(webLinks))
-        i = 1
-        print(len(results))
+        i = 0
         while i < len(results):
 
             if webLinks[i] == '':
-                print(i)
 
                 textToAdd: str = ''
                 while (i < len(webLinks)) and (webLinks[i] == ''):
@@ -147,13 +151,19 @@ def generate_report(filename: str, plagIndex: float, results: dict[str, str], wo
                     i += 1
 
                 pdf.addNormally(textToAdd)
-
             else:
                 pdf.addHighlighted(phrases[i], webLinks[i])
                 i += 1
 
+        # adding a refernce list at the end
+        pdf.add_page()
+        pdf.set_font('times', 'BU', 20)
+        pdf.cell(0,20,"References",align='C',ln=True)
+        pdf.addBulletList(references)
+
         # output the report
-        os.chdir(downloadFolder)#specifies which directory to create the report.pdf in
+        #os.chdir(downloadFolder)#specifies which directory to create the report.pdf in
         pdf.output(f'{filename}_plagiarism_report.pdf')
         print('report created')
         #os.path.remove(filename)#to delete the og file
+       
