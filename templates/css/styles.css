@@ -735,3 +735,26 @@ label{
       padding:10px;
     }
   }
+/* --------------for second page:----------------*/
+  .pdf-container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 150vh;
+		}
+		.pdf-object {
+			width: 80%;
+			height: 80%;
+		}
+		.download-button {
+			background-color: #4CAF50; 
+  			color: white; 
+  			padding: 12px 24px; 
+  			border: none; 
+  			border-radius: 6px; 
+  			cursor: pointer; 
+        margin-bottom:10%;
+		}
+		.download-button:hover {
+			background-color: #3e8e41; 
+		}
