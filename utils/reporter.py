@@ -48,7 +48,7 @@ class PDF(FPDF):
         current = datetime.datetime.now()
         curr_date: str = f'Date of Creation = ({current.day}-{current.month}-{current.year})'
         curr_time = f'Time Of Creation = {current.hour}:{current.minute}:{current.second}'
-        a = f'{curr_date}                           {curr_time}'
+        a = f'{curr_date}               |           {curr_time}'
         x: str = f'Word Count = {wordCount}'
         y: str = f'Total Instances of Plagiarism = {instancesOfPlagerism}'
         z: str = f'Plagiarism Percetage = {plagIndex * 100}%'
