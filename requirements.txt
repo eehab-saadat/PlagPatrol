@@ -1,2 +1,5 @@
 Flask
 google-api-python-client
+docxpy
+PyPDF2
+fpdf2
