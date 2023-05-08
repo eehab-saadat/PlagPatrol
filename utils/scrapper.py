@@ -53,6 +53,17 @@ def check_plagiarism(phrases, word_count):
             key_number+=1
             # Build the service object for the Custom Search JSON API with new API key
             service = build('customsearch', 'v1', developerKey=API_KEY[key_number])
+             response = service.cse().list(q=search, cx=SEARCH_ENGINE_ID, num=1).execute()
+            # checking if any result was found
+            if 'items' in response:
+                first_url = response['items'][0]['link']
+                # adding phrase plus url to dict
+                Dict[phrase] = first_url
+                # adding number of words in phrase to found variable
+                found += len(phrase.split())
+            else:
+                # adding null value if phrase not found
+                Dict[phrase] = ""
             continue
 
 
