@@ -49,8 +49,6 @@ def check_plagiarism(phrases, word_count):
                 Dict[phrase] = ""
         except HttpError as error:
             print(f'An error occurred: {error}')
-            #decreementing to check phrase again
-            phrase-=1
             #changing API key
             key_number+=1
             # Build the service object for the Custom Search JSON API with new API key
