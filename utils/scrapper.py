@@ -23,8 +23,6 @@ def check_plagiarism(phrases, word_count):
 
     # initializing key number
     key_number = 0
-    # Build the service object for the Custom Search JSON API
-    service = build('customsearch', 'v1', developerKey=API_KEY[key_number])
 
     # Initialize an empty dictionary to store the search results
     Dict = {}
@@ -38,6 +36,8 @@ def check_plagiarism(phrases, word_count):
         #  adding qoutes to query for searching
         search = f'"{phrases[i]}"'
         try:
+            # Build the service object for the Custom Search JSON API
+            service = build('customsearch', 'v1', developerKey=API_KEY[key_number])
             # getting first search result
             response = service.cse().list(q=search, cx=SEARCH_ENGINE_ID, num=1).execute()
             # checking if any result was found
@@ -52,20 +52,22 @@ def check_plagiarism(phrases, word_count):
                 Dict[phrases[i]] = ""
         except HttpError as error:
             print(f'An error occurred: {error}')
-            #changing API key
-            key_number+=1
-            if(key_number>=len(API_KEY)):
-                print('Querie limit reached')
-                break
-            # Build the service object for the Custom Search JSON API with new API key
-            service = build('customsearch', 'v1', developerKey=API_KEY[key_number])
-            response = service.cse().list(q=search, cx=SEARCH_ENGINE_ID, num=1).execute()
-            # deccrementing i to re run phrase
-            i = i -1
+            print(error.status_code)
+            if(error.status_code in [429]):
+                # changing API key
+                key_number += 1
+                # deccrementing i to re run phrase
+                i = i - 1
+                if (key_number >= len(API_KEY)):
+                    print('Querie limit reached')
+                    break
+            else : raise
+
 
         i += 1
 
 
     plag_index = format(found / word_count, ".3f")
+
     result = (plag_index, Dict)
     return result
