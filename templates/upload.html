@@ -31,12 +31,10 @@
         
         <script type="text/javascript">
           document.getElementById("upload-form").onchange = function() {
-              // submitting the form
-              document.getElementById("upload-form").submit();
+            // submitting the form
+            document.getElementById("upload-form").submit();
           };
-        </script>
-
-        <script>
+        
           const fileBox = document.querySelector('.file-box');
           const fileUpload = document.querySelector('#file-upload');
         
@@ -57,6 +55,7 @@
             fileBox.classList.remove('highlight');
             const files = e.dataTransfer.files;
             fileUpload.files = files;
+            document.getElementById("upload-form").submit(); // auto-submit the form on drop
           });
         
           // Submit event handler
