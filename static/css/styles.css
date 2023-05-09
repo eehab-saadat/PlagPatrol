@@ -360,6 +360,10 @@ label{
   
   .description {
     white-space: wrap;
+    text-align:justify;
+  }
+  .wrap p+p {
+    margin-top: -10%;
   }
   
   a {
@@ -393,7 +397,7 @@ label{
     flex-direction: column;
     flex-basis: 100%;
     position: relative;
-    padding: 15px;
+    padding: 1%;
     background: #ffff;
     opacity: 0;
     transition: opacity 3s ease-in-out;
@@ -458,7 +462,7 @@ label{
   
   /* RESPONSIVE QUERIES */
   
-  @media (min-width: 320px) {
+  @media (min-width: 100px) { /*360*/
     .title-flex {
       display: flex;
       flex-direction: column;
@@ -470,7 +474,7 @@ label{
     }
   }
   
-  @media (min-width: 460px) {
+  @media (min-width: 200px) {/*460*/
     .title-flex {
       display: flex;
       flex-direction: row;
@@ -482,9 +486,9 @@ label{
     }
   }
   
-  @media (min-width: 640px) {
+  @media (min-width: 350px) {/*640*/
     .box {
-      flex-basis: calc(50% - 12px);
+      flex-basis: calc(50% - 12px);/*50*/
     }
     .title-flex {
       display: flex;
@@ -497,7 +501,7 @@ label{
     }
   }
   
-  @media (min-width: 840px) {
+  @media (min-width: 450px) {/*840*/
     .title-flex {
       display: flex;
       flex-direction: row;
@@ -509,7 +513,7 @@ label{
     }
   }
   
-  @media (min-width: 1024px) {
+  @media (min-width: 650px) {/*10240*/
     .box {
       flex-basis: calc(33.3% - 16px);
     }
@@ -524,7 +528,7 @@ label{
     }
   }
   
-  @media (min-width: 1100px) {
+  @media (min-width: 850px) {/*1100*/
     .box {
       flex-basis: calc(25% - 18px);
     }
@@ -548,6 +552,7 @@ label{
     background-size: cover;
     background-repeat:no-repeat;
     max-width:100%;
+    min-width:20%;
     background-position: center center;
     padding: 15px 20px;
     text-align: center;
@@ -573,6 +578,20 @@ label{
     opacity: 1;
     transform: translateY(0);
   }
+  /* .vision-section {
+    flex-basis: calc(33.33% - 10px);
+    margin: 10px;
+  }
+  @media (max-width: 768px) {
+    .vision-section {
+      flex-basis: calc(50% - 10px);
+    }
+  }
+  @media (max-width: 480px) {
+    .vision-section {
+      flex-basis: calc(100% - 10px);
+    }
+  } */
   
   
   /*--------------------------------------------------Vertical Scrolling Text-----------------------------------*/
@@ -847,7 +866,7 @@ footer .wave#wave1 {
   z-index: 1000;
   opacity: 1;
   bottom: 0;
-  animation: animateWave 6s linear infinite;
+  animation: animateWave 5s linear infinite;
   
  
 }
@@ -856,7 +875,7 @@ footer .wave#wave2 {
   z-index: 999;
   opacity: 0.5;
   bottom: 10px;
-  animation: animateWave_02 6s linear infinite;
+  animation: animateWave_02 5s linear infinite;
 
  
   
@@ -866,7 +885,7 @@ footer .wave#wave3 {
   z-index: 1000;
   opacity: 0.2;
   bottom: 0;
-  animation: animateWave 5s linear infinite;
+  animation: animateWave 3s linear infinite;
   
  
 
@@ -876,7 +895,7 @@ footer .wave#wave4 {
   z-index: 999;
   opacity: 0.7;
   bottom: 20px;
-  animation: animateWave_02 5s linear infinite;
+  animation: animateWave_02 3s linear infinite;
  
  
 }
