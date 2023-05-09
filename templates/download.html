@@ -11,15 +11,15 @@
  
   </head>
   <body>
+    <div class="logoss">
     <h1 class="logo">PlagPatrol</h1>
     <h1 class="sub-logo">By Team Algorithm Avengers</h1>
-    <div class="pdf-container">
-      <!-- embed PDF -->
-      <embed class="pdf-object" src="{{ report }}">
-    </div>
+  </div>
+    
+      
     <!-- download button -->
     <div style="text-align: center; margin-top: 20px;margin-bottom:5%;">
-      <a href="{{url_for('download_file', filename=filename)}}" download class="download-button">Download</a>
+      <a href="{{url_for('download_file', filename=filename)}}" download class="download-button">DOWNLOAD REPORT</a>
     </div>
     </body>
 </html>
