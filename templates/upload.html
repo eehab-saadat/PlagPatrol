@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Damion&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Racing+Sans+One&display=swap">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="icon" type="image" href="{{ url_for('static', filename='assets/favicon.png') }}">
+
 
     
   </head>
@@ -32,10 +34,12 @@
         
         <script type="text/javascript">
           document.getElementById("upload-form").onchange = function() {
-            // submitting the form
-            document.getElementById("upload-form").submit();
+              // submitting the form
+              document.getElementById("upload-form").submit();
           };
-        
+        </script>
+
+        <script>
           const fileBox = document.querySelector('.file-box');
           const fileUpload = document.querySelector('#file-upload');
         
@@ -56,7 +60,6 @@
             fileBox.classList.remove('highlight');
             const files = e.dataTransfer.files;
             fileUpload.files = files;
-            document.getElementById("upload-form").submit(); // auto-submit the form on drop
           });
         
           // Submit event handler
@@ -67,7 +70,7 @@
               alert('Please select a file to upload.');
             }
           });
-        </script>        
+        </script>
         
         <form method="POST" id="submit-text">
           <div class="text-box">
@@ -145,7 +148,8 @@
             <h3 class="box-title">Fayyez Farrukh</h3>
             <p class="user-follow-info">Back-End</p>
           </div>
-          <p class="description">It was an absolute delight to work with the remarkable team PlagPatrol. My advice for all coders out there, "When a program gives you lemons, forget about lemonades, instead bake some brownies."</p>
+          <p class="description">It was an absolute delight to work with the remarkable team PlagPatrol. My advice for all coders out there:</p>
+           <p class="description">When a program gives you lemons, forget about lemonades, instead bake some brownies."</p>
         </div>
         <a href="https://www.instagram.com/fayyezfarrukh/" class="button">Follow Fayyez</a>
       </div>
