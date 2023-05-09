@@ -1,6 +1,6 @@
 # Imports
-from os import environ
-from os.path import join, dirname, abspath
+from os import environ, remove
+from os.path import join, dirname, abspath, exists
 from flask_wtf.csrf import CSRFProtect
 from utils.scrapper import check_plagiarism
 from utils.reporter import generate_report
@@ -8,6 +8,9 @@ from utils.file_processor import parse, tokenize, get_meta
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import HTTPException
 from flask import Flask, flash, request, escape, redirect, url_for, render_template, send_from_directory
+
+file_path = None
+report_path = None
 
 # App Instantiation & Config.
 app = Flask(__name__)
@@ -29,7 +32,7 @@ def check_file_extension(filename):
         filename (str): Name of the file to be checked.
     Returns:
         bool: Returns True if it is valid and False elsewise.
-    '''
+    ''' 
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ['pdf','txt','docx']
 
 # Renders The Default Upload Page, Listens For Files and Downloads Them.
@@ -41,6 +44,13 @@ def upload_file():
         str: Returns the html parsed string to jinja2 for rendering 
         the requested page.
     '''
+    global file_path
+    global report_path
+    if file_path != None and exists(file_path):
+        remove(file_path)
+    if report_path != None and exists(report_path):
+        remove(report_path)
+
     if request.method == 'POST' and 'file' in request.files:
         # Restricts multiple-file upload.
         if len(request.files.getlist('file')) > 1:
@@ -57,13 +67,14 @@ def upload_file():
             # Saves the file if everything is valid.
             if file and check_file_extension(filename):
                 userfile = join(app.config['DOWNLOAD_FOLDER'], filename)
+                file_path = userfile
                 file.save(userfile)
                 rawContent = parse(userfile)
                 tokContent = tokenize(rawContent)
                 wordCount, charCount = get_meta(rawContent)
                 plagIndex, results = check_plagiarism(tokContent, wordCount)
                 report = generate_report(filename.split('.', 1)[0], plagIndex, results, wordCount, charCount, app.config['DOWNLOAD_FOLDER'])
-            
+                report_path = report
                 return render_template('download.html', filename=filename, report=report)
     
     if request.method == 'POST' and 'text' in request.form:
