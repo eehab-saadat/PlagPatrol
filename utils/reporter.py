@@ -11,7 +11,7 @@ class PDF(FPDF):
         '''
         this method is to create the title page of report with logo
         '''
-        self.image('plag_patrol_logo.png', 62, 2, 83,48)  # adds a logo on top of first page
+        self.image(f'{os.getcwd()}/static/assets/plag_patrol_logo.png', 62, 2, 83,48)  # adds a logo on top of first page
         self.line(10, 52, 200, 52)
         # set font is a precondition to add a cell
         self.set_font('times', 'BUI', 22)
@@ -34,7 +34,7 @@ class PDF(FPDF):
         '''
         extending header method to add watermark on every page created in the report
         '''
-        self.image("palgpetrol watermartk.png", 20, 125, 180)
+        self.image(f"{os.getcwd()}/static/assets/plagpetrol watermark.png", 20, 125, 180)
 
     def metaData(self, wordCount: int, instancesOfPlagerism: int, plagIndex: float):
         '''
@@ -108,7 +108,7 @@ def generate_report(filename: str, plagIndex: float, results: dict[str, str], wo
         # pdf = an object of PDF class thta'll be used to create the report
         pdf = PDF(orientation='P', unit='mm', format='A4')
         # getting a unicode font for universal use 
-        pdf.add_font('DejaVuSans','',f'{os.getcwd()}\DejaVuSans.ttf', uni=True)
+        pdf.add_font('DejaVuSans','',f'{os.getcwd()}/static/assets/DejaVuSans.ttf', uni=True)
 
     # creating a set of all references to be added as a list at the end of report
         x = 0
