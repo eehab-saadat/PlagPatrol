@@ -9,17 +9,14 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Damion&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Racing+Sans+One&display=swap">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="icon" type="image" href="{{ url_for('static', filename='assets/favicon.png') }}">
-
-
-    
+    <link rel="icon" type="image" href="{{ url_for('static', filename='assets/favicon.png') }}"> 
   </head>
   <body>
     <h1 class="logo">PlagPatrol</h1>
     <h1 class="sub-logo">By Team Algorithm Avengers</h1>
     
     
-        <!-----------------------------------------text box----------------------------------->
+        <!-----------------------------------------file box----------------------------------->
         
 
         <div class="file-box">
@@ -72,6 +69,7 @@
           });
         </script>
         
+        <!-------------------------------------------text box---------------------------------->
         <form method="POST" id="submit-text">
           <div class="text-box">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -79,11 +77,6 @@
             <button type="submit">Send</button> <!-- Send Button -->
           </div>
         </form>
-          
-          <!--
-          <textarea placeholder="Type or paste your message here..."></textarea>
-          <button type="submit" value="txt_data">Send</button> 
-          -->
     
         <script>
           const textBox = document.querySelector('.text-box');
@@ -111,19 +104,27 @@
           }, { threshold: 0.5 });
           observer2.observe(textbox);
         </script>
-        
-
-    <!-------------------------------------------/text box---------------------------------->
-
     
     <!--------------------------------------------the team----------------------------------------------->
     <div class="wrap">
       <div class="box">
         <div class="box-top">
+          <img class="box-image" src="{{ url_for('static', filename='assets/eehab.jpeg') }}" alt="eehab">
+          <div class="title-flex">
+            <h3 class="box-title">Eehab Sadaat</h3>
+            <p class="user-follow-info">Project Lead, Back-End Dev</p>
+          </div>
+          <p class="description">A tech enthusiast and keen cocomo consumer, meet the brain (and brawn) behind this project. </p>
+          <p class="description">Infinite rizz but 2b || !2b // that is the question!</p>
+        </div>
+        <a href="#" class="button">Follow Eehab</a>
+      </div>
+      <div class="box">
+        <div class="box-top">
           <img class="box-image" src="{{ url_for('static', filename='assets/zain.png') }}" alt="zain">
           <div class="title-flex">
             <h3 class="box-title">Zain Iqbal</h3>
-            <p class="user-follow-info">Front-End</p>
+            <p class="user-follow-info">Front-End Dev</p>
           </div>
           <p class="description">Technophile speed demon by day, Otaku by night, prince charming in your dreams. I don't rest because sukoon sirf qabar mei hai. Don't push me or I'll release all the bugs in my code onto you.</p>
         </div>
@@ -131,22 +132,10 @@
       </div>
       <div class="box">
         <div class="box-top">
-          
-          <img class="box-image" src="{{ url_for('static', filename='assets/eehab.jpeg') }}" alt="eehab">
-          <div class="title-flex">
-            <h3 class="box-title">Eehab Sadaat</h3>
-            <p class="user-follow-info">Back-End</p>
-          </div>
-          <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        </div>
-        <a href="#" class="button">Follow Eehab</a>
-      </div>
-      <div class="box">
-        <div class="box-top">
           <img class="box-image" src="{{ url_for('static', filename='assets/fayyez.jpeg') }}" alt="fayyez">
           <div class="title-flex">
             <h3 class="box-title">Fayyez Farrukh</h3>
-            <p class="user-follow-info">Back-End</p>
+            <p class="user-follow-info">Back-End Dev</p>
           </div>
           <p class="description">It was an absolute delight to work with the remarkable team PlagPatrol. My advice for all coders out there:</p>
            <p class="description">When a program gives you lemons, forget about lemonades, instead bake some brownies."</p>
@@ -158,7 +147,7 @@
           <img class="box-image" src="{{ url_for('static', filename='assets/ahmed.png') }}" alt="ahmed">
           <div class="title-flex">
             <h3 class="box-title">Ahmed Karim</h3>
-            <p class="user-follow-info">Web Scraper</p>
+            <p class="user-follow-info">Web Scraper Engineer</p>
           </div>
           <p class="description">Average python enjoyer, Muhammad Ahmad. Has depression, loves anime. Committed hours into making sure this web scrapper is in the best possible condition. Everyone will die someday.</p>
         </div>
