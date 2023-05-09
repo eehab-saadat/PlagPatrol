@@ -1,6 +1,6 @@
 # Imports
-from os import environ, remove
-from os.path import join, dirname, abspath, exists
+from os import environ, remove,listdir
+from os.path import join, dirname, abspath, exists, isfile
 from flask_wtf.csrf import CSRFProtect
 from utils.scrapper import check_plagiarism
 from utils.reporter import generate_report
@@ -106,6 +106,15 @@ def download_file(filename):
     filename = secure_filename(escape(filename))
     filename = filename.split('.', 1)[0]
     return send_from_directory(app.config['DOWNLOAD_FOLDER'], f'{filename}_plagiarism_report.pdf', as_attachment=True)
+
+# Hidden route to delete files in '\tmp\' folder.
+@app.route('/delete')
+def delete_files():
+    for file_name in listdir(app.config['DOWNLOAD_FOLDER']):
+        file_path = join(app.config['DOWNLOAD_FOLDER'], file_name)
+        if isfile(file_path) and file_name != 'placeholder.txt':
+            remove(file_path)
+    return redirect('/')
 
 # Execution Config.
 if __name__ == '__main__':
