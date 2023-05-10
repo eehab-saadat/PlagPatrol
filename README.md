@@ -1,5 +1,5 @@
 # PlagPatrol - The Ultimate Plagirism Checker
-The ultimate responsive web-based OCR-embdedded plaigirism checker which generates PDF plaigirism analysis reports and supports handwriting detection. This was created as an end-of-semester project. 
+The ultimate responsive web-based plaigirism checker which generates PDF plaigirism analysis reports. This was created as an end-of-semester project. 
 
 ## Installation & Setup
 1. [Install python](https://www.python.org/downloads/), if you haven't already.
