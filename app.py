@@ -18,7 +18,7 @@ app = Flask(__name__)
 #app.config.from_object(environment_configuration)
 app.config["APP_NAME"] = "PlagPatrol"
 app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024
-app.config["DOWNLOAD_FOLDER"] = dirname(abspath(__file__)) + '\\tmp\\'
+app.config["DOWNLOAD_FOLDER"] = dirname(abspath(__file__)) + '/tmp/'
 app.config["ENV"] = "development"
 app.config["SECRET_KEY"] = "69535ae0bbbcaf0e3ab71bbb626e36541b8c0c61d9180f6e"
 app.config["DEBUG"] = True
