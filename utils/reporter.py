@@ -11,7 +11,7 @@ class PDF(FPDF):
         '''
         this method is to create the title page of report with logo
         '''
-        self.image('plag_patrol_logo.png', 62, 2, 83,48)  # adds a logo on top of first page
+        self.image(f'{os.getcwd()}/static/assets/plag_patrol_logo.png', 62, 2, 83,48)  # adds a logo on top of first page
         self.line(10, 52, 200, 52)
         # set font is a precondition to add a cell
         self.set_font('times', 'BUI', 22)
@@ -34,24 +34,24 @@ class PDF(FPDF):
         '''
         extending header method to add watermark on every page created in the report
         '''
-        self.image("palgpetrol watermartk.png", 20, 125, 180)
+        self.image(f"{os.getcwd()}/static/assets/plagpetrol watermark.png", 20, 125, 180)
 
     def metaData(self, wordCount: int, instancesOfPlagerism: int, plagIndex: float):
         '''
         to add meta data like plag percentag, instances of plagiarism and date and time of
         creation of plagiarism report
         '''
-
+        plagIndex = float(plagIndex) * 100
         self.set_line_width(1)
         self.set_font('times', 'BI', 16)  # bold and italic
         # all variables to be added as meta data
         current = datetime.datetime.now()
         curr_date: str = f'Date of Creation = ({current.day}-{current.month}-{current.year})'
         curr_time = f'Time Of Creation = {current.hour}:{current.minute}:{current.second}'
-        a = f'{curr_date}                           {curr_time}'
+        a = f'{curr_date}              |            {curr_time}'
         x: str = f'Word Count = {wordCount}'
         y: str = f'Total Instances of Plagiarism = {instancesOfPlagerism}'
-        z: str = f'Plagiarism Percetage = {plagIndex * 100}%'
+        z: str = f'Plagiarism Percetage = {plagIndex}%'
         # adding text to report
         self.multi_cell(0, 8, a, ln=1, border=1)
         self.cell(0, 8, x, ln=1, border=1)
@@ -108,7 +108,7 @@ def generate_report(filename: str, plagIndex: float, results: dict[str, str], wo
         # pdf = an object of PDF class thta'll be used to create the report
         pdf = PDF(orientation='P', unit='mm', format='A4')
         # getting a unicode font for universal use 
-        pdf.add_font('DejaVuSans','',f'{os.getcwd()}\DejaVuSans.ttf', uni=True)
+        pdf.add_font('DejaVuSans','',f'{os.getcwd()}/static/assets/DejaVuSans.ttf', uni=True)
 
     # creating a set of all references to be added as a list at the end of report
         x = 0
@@ -162,8 +162,12 @@ def generate_report(filename: str, plagIndex: float, results: dict[str, str], wo
         pdf.addBulletList(references)
 
         # output the report
-        #os.chdir(downloadFolder)#specifies which directory to create the report.pdf in
-        pdf.output(f'{filename}_plagiarism_report.pdf')
+        os.chdir(downloadFolder)#specifies which directory to create the report.pdf in
+        print(downloadFolder)
+        filename = f'{downloadFolder}/{filename}_plagiarism_report.pdf'
+        pdf.output(filename)
         print('report created')
         #os.path.remove(filename)#to delete the og file
+        return filename
+
        
