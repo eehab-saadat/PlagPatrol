@@ -8,7 +8,7 @@ The ultimate responsive web-based plaigirism checker which generates PDF plaigir
 4. After having the repository cloned, open up a terminal and navigate (`cd`) to the cloned directory, such that you're within the directory. 
 5. Now create a *virtual environment*, by running the following command (assuming you have a Windows device):
 ```
-> py -3 -m venv venv
+> py -m venv venv
 ```
 6. Virtual environments help bundle up dependencies and manage them more effectively and better. Before you work on your project, you need to activate the corresponding environment:
 ```
