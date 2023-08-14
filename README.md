@@ -1,3 +1,5 @@
+> This project has been made public only temporarily. This project needs an updated README and License inclusion for permanent public visibility, which will be done in due time.
+
 # PlagPatrol - The Ultimate Plagirism Checker
 The ultimate responsive web-based plaigirism checker which generates PDF plaigirism analysis reports. This was created as an end-of-semester project. 
 
