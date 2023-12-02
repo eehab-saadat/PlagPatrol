@@ -2,8 +2,6 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 # Enter your custom search engine ID and API key here
-SEARCH_ENGINE_ID = '22f500feeb8a446df'
-API_KEY = ['AIzaSyAe34tm9-Og0El5ISwScopDSlYspE-XwO0','AIzaSyBOA0brUC0brGOUafT9-b9iRqNInGCAElw','AIzaSyD_HGYh0pQ3jk-VSVD-QSzR5Htf9at0p1E', 'AIzaSyBAfORIz0-AwPGogtQ9XX64qVx1xBJWj50', 'AIzaSyB-k9gC6MPO54Hfi68g7clbHXG3_OgoK9E', 'AIzaSyC0b1hAxFIDalgJNo5K7Uqx-__VqhckZpg', 'AIzaSyAPmdz598v1EwYZWEX_ip-EMHd4f2LCfVs','AIzaSyCbN2EDY0OMaeoWM-LzWwciGc7kyFO2IcQ','AIzaSyBoKCwz4UdJWNn0xuZBT1ftIyrsicS1K-4','AIzaSyDoV-kHHbFsLbrp--le16HDNEOxCmLetLA','AIzaSyCyFLEIOicC4YlGy818AYtfBmXLLhJHEA8']
 
 
 def check_plagiarism(phrases, word_count):
