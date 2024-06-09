@@ -107,8 +107,8 @@ def generate_report(filename: str, plagIndex: float, results: dict[str, str], wo
         references = set() # A set of all urls in dict
         # pdf = an object of PDF class thta'll be used to create the report
         pdf = PDF(orientation='P', unit='mm', format='A4')
-        # getting a unicode font for universal use 
-        pdf.add_font('DejaVuSans','',f'{os.getcwd()}/static/assets/DejaVuSans.ttf', uni=True)
+        # getting a unicode font for universal use
+        pdf.add_font('DejaVuSans','',f'{os.getcwd()}\\static\\assets\\DejaVuSans.ttf', uni=True)
 
     # creating a set of all references to be added as a list at the end of report
         x = 0
