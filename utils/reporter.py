@@ -7,11 +7,15 @@ class PDF(FPDF):
     PDF class is inherited from buit-in FPDF class (base class)
     '''
 
+    def __init__(self, orientation='P', unit='mm', format='A4'):
+        super().__init__(orientation=orientation, unit=unit, format=format)
+        self.parent_dir = os.path.dirname((os.path.dirname(__file__)))
+
     def Addlogo(self):
         '''
         this method is to create the title page of report with logo
         '''
-        self.image(f'{os.getcwd()}/static/assets/plag_patrol_logo.png', 62, 2, 83,48)  # adds a logo on top of first page
+        self.image(f'{self.parent_dir}/static/assets/plag_patrol_logo.png', 62, 2, 83,48)  # adds a logo on top of first page
         self.line(10, 52, 200, 52)
         # set font is a precondition to add a cell
         self.set_font('times', 'BUI', 22)
@@ -34,7 +38,7 @@ class PDF(FPDF):
         '''
         extending header method to add watermark on every page created in the report
         '''
-        self.image(f"{os.getcwd()}/static/assets/plagpetrol watermark.png", 20, 125, 180)
+        self.image(f"{self.parent_dir}/static/assets/plagpetrol watermark.png", 20, 125, 180)
 
     def metaData(self, wordCount: int, instancesOfPlagerism: int, plagIndex: float):
         '''
@@ -89,9 +93,9 @@ class PDF(FPDF):
         '''
         self.set_font('DejaVuSans', 'U', 14)
         for url in references:
-            
+
             self.multi_cell(0, 6, f'\u2022{url}', ln=True)
-            self.ln(4)    
+            self.ln(4)
         self.set_font('DejaVuSans', '', 14)
 
 
@@ -99,7 +103,7 @@ def generate_report(filename: str, plagIndex: float, results: dict[str, str], wo
     '''
     create a pdf only if more than 10 words are present
     '''
- 
+
     if (wordCount >= 10):
 
         # stores the number of sources from which plagiarism was detected
@@ -108,7 +112,8 @@ def generate_report(filename: str, plagIndex: float, results: dict[str, str], wo
         # pdf = an object of PDF class thta'll be used to create the report
         pdf = PDF(orientation='P', unit='mm', format='A4')
         # getting a unicode font for universal use
-        pdf.add_font('DejaVuSans','',f'{os.getcwd()}\\static\\assets\\DejaVuSans.ttf', uni=True)
+        current_path = os.path.dirname(__file__)
+        pdf.add_font('DejaVuSans','',f'{current_path}/DejaVuSans.ttf', uni=True)
 
     # creating a set of all references to be added as a list at the end of report
         x = 0
@@ -169,5 +174,3 @@ def generate_report(filename: str, plagIndex: float, results: dict[str, str], wo
         print('report created')
         #os.path.remove(filename)#to delete the og file
         return filename
-
-       
