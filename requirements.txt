@@ -4,3 +4,4 @@ docxpy
 PyPDF2
 fpdf2
 flask_wtf
+gunicorn
