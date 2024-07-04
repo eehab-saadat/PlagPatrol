@@ -7,7 +7,8 @@ from utils.reporter import generate_report
 from utils.file_processor import parse, tokenize, get_meta
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import HTTPException
-from flask import Flask, flash, request, escape, redirect, url_for, render_template, send_from_directory
+from flask import Flask, flash, request, redirect, url_for, render_template, send_from_directory
+from markupsafe import escape
 
 file_path = None
 report_path = None
