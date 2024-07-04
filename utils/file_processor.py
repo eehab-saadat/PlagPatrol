@@ -49,24 +49,24 @@ def parse(filename: str):
 def tokenize(text):
     delimiters = ".", ";", "\"", "-", ":", "?", "!"
     regex_pattern = '|'.join('(?<={})'.format(escape(delim)) for delim in delimiters)
-    return [s.strip() for s in split(regex_pattern, text) if s.strip()]
+    return list(filter(lambda x: len(x.split(' ')) > 10, [s.strip() for s in split(regex_pattern, text) if s.strip()]))
 
 # Test Data
 #docx = tokenize(parse('Lipsum.docx'))
 #txt = tokenize(parse('Lipsum.txt'))
 #pdf = tokenize(parse('Lipsum.pdf'))
 
-def filter(phrases):
+def filter_phrases(phrases):
     return [phrase for phrase in phrases if len(phrase.split(' ', 2)) > 2]
 
 def get_meta(text: str):
     return (len(text.split()), len(text))
 
 # Display
-#x = "Hello this a string, an output string. Whereas, this is also another phrase! Can't believe it? Here's how to: Do not."
-#x = "Hello, do you know who I am? I am Eehab, Eehab Saadat."
-#print(f"Original: {x}")
-#print(f"Output: {tokenize(x)}")
+# x = "Hello this a string, an output string. Whereas, this is also another phrase! Can't believe it? Here's how to: Do not."
+# x = "Hello, do you know who I am? I am Eehab, Eehab Saadat."
+# print(f"Original: {x}")
+# print(f"Output: {tokenize(x)}")
 #getMeta = lambda x: (len(x.split()), len(x))
 #w,c = getMeta(x)
 #print(f"Word Count: {w} \tChar Count: {c}")
