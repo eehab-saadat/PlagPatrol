@@ -3,7 +3,7 @@ from os.path import dirname, abspath
 
 # Parent Config Class For Common Attributes
 class Config(object):
-    DEBUG = False
+    DEBUG = True
     TESTING = False
     APP_NAME = "PlagPatrol"
     MAX_CONTENT_LENGTH = 8 * 1024 * 1024
